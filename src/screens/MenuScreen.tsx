@@ -363,7 +363,7 @@ export function MenuScreen({ progress, onNavigate }: Props) {
         }}
       >
         <p className="text-[10px] text-slate-700" style={{ fontFamily: FONT_MONO }}>
-          6 mundos · 30 fases · Autômatos Finitos Determinísticos
+          3 mundos · 30 fases · Autômatos Finitos Determinísticos
         </p>
       </div>
     </div>
