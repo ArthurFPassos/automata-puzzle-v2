@@ -133,6 +133,8 @@ const W1: Level[] = [
   },
 
   // ── Fase 6: Ordenar componentes ──────────────────────────────────
+  // CORRIGIDO: removida numeração explícita dos itens para que a ordem
+  // não seja trivialmente dedutível pelo prefixo "1.", "2.", etc.
   {
     id: 6, world: 1, name: 'Ordem das Etapas', difficulty: 2,
     concept: 'Processamento passo a passo',
@@ -144,13 +146,14 @@ const W1: Level[] = [
       type: 'order',
       instruction: 'Ordene os passos do processamento de uma string num autômato finito:',
       items: [
-        '1. Partir do estado inicial (q0)',
-        '2. Ler o próximo símbolo da string (da esquerda para a direita)',
-        '3. Seguir a transição δ(estado atual, símbolo lido)',
-        '4. Atualizar o estado atual para o estado de destino',
-        '5. Repetir passos 2–4 até o fim da string',
-        '6. Verificar se o estado atual pertence a F (estados de aceitação)',
+        'Partir do estado inicial (q0)',
+        'Ler o próximo símbolo da string (da esquerda para a direita)',
+        'Seguir a transição δ(estado atual, símbolo lido)',
+        'Atualizar o estado atual para o estado de destino',
+        'Repetir os dois passos anteriores até o fim da string',
+        'Verificar se o estado atual pertence a F (estados de aceitação)',
       ],
+      // ordem correta: índices 0→1→2→3→4→5 (definida implicitamente por `items`)
     },
   },
 
@@ -310,65 +313,73 @@ const W2: Level[] = [
     },
   },
 
-  // ── Fase 12: Arrastar rótulos de transição ────────────────────────
+  // ── Fase 12: Dragdrop rótulos de transição ────────────────────────
+  // CORRIGIDO: as transições do diagrama exibido NÃO têm rótulo (label: '?')
+  // para as setas que precisam ser preenchidas, e os blanks referenciam
+  // exatamente essas setas. O array `transitions` só contém as setas já
+  // conhecidas; as setas "?" são renderizadas a partir de `activity.blanks`.
   {
     id: 12, world: 2, name: 'Complete as Transições', difficulty: 2,
     concept: 'Completar função de transição por dragdrop',
     story: 'Algumas setas deste autômato perderam seus rótulos! Arraste os símbolos corretos para completar a função de transição.',
     pedagogy: 'Mecânica central do Mundo 2: dragdrop de rótulos em transições. Exige aplicação direta de δ.',
-    hint: 'Este autômato aceita strings com número ÍMPAR de "a"s. Pense qual símbolo causa a troca de estado.',
+    hint: 'Este autômato aceita strings com número ÍMPAR de "a"s. Ler "a" troca o estado; ler "b" mantém o mesmo estado.',
     states: [
       { id: 'par',  label: 'Par',  x: 200, y: 230, isInitial: true,  isAccept: false },
       { id: 'imp',  label: 'Ímpar', x: 500, y: 230, isInitial: false, isAccept: true  },
     ],
+    // Apenas as transições já reveladas ao aluno (os loops de 'b' são dados)
     transitions: [
-      { from: 'par', to: 'imp', label: 'a' },
-      { from: 'imp', to: 'par', label: 'a' },
       { from: 'par', to: 'par', label: 'b' },
       { from: 'imp', to: 'imp', label: 'b' },
     ],
     activity: {
       type: 'dragdrop',
-      instruction: 'Arraste os rótulos corretos para as setas "?" do autômato (conta número ímpar de "a"s).',
+      instruction: 'Arraste os rótulos corretos para as setas "?" do autômato (ele conta o número ímpar de "a"s).',
       blanks: [
         { from: 'par', to: 'imp', correctLabel: 'a' },
         { from: 'imp', to: 'par', correctLabel: 'a' },
       ],
-      labelPool: ['a', 'b', 'a,b', '0', '1'],
+      labelPool: ['a', 'b', 'a,b', '0'],
     },
   },
 
   // ── Fase 13: Rastrear string ("select-elements") ─────────────────
+  // CORRIGIDO: correctIds não pode conter repetições num select-elements.
+  // Novo autômato sem visitas repetidas ao longo do caminho "010":
+  // q0 -0→ q1 -1→ q2 -0→ q3. Caminho: [q0, q1, q2, q3] — sem repetição.
   {
     id: 13, world: 2, name: 'Rastrea "010"', difficulty: 2,
     concept: 'δ* — função de transição estendida',
     story: 'A string "010" entra no autômato. Selecione, em ordem, todos os estados visitados durante o processamento — incluindo inicial e final.',
     pedagogy: 'Intercala mecânica select-elements (do Mundo 1) com conteúdo de Mundo 2 (δ*), forçando raciocínio procedimental.',
-    hint: 'Parta de q0, siga 0→q1, depois 1→?, depois 0→?. Siga as setas!',
+    hint: 'Parta de q0, leia 0 → q1, leia 1 → q2, leia 0 → q3. Siga as setas!',
     states: [
-      { id: 'q0', label: 'q0', x: 200, y: 230, isInitial: true,  isAccept: false },
-      { id: 'q1', label: 'q1', x: 420, y: 140, isInitial: false, isAccept: false },
-      { id: 'q2', label: 'q2', x: 420, y: 320, isInitial: false, isAccept: true  },
-      { id: 'q3', label: 'q3', x: 620, y: 230, isInitial: false, isAccept: false },
+      { id: 'q0', label: 'q0', x: 160, y: 230, isInitial: true,  isAccept: false },
+      { id: 'q1', label: 'q1', x: 360, y: 230, isInitial: false, isAccept: false },
+      { id: 'q2', label: 'q2', x: 560, y: 230, isInitial: false, isAccept: false },
+      { id: 'q3', label: 'q3', x: 760, y: 230, isInitial: false, isAccept: true  },
     ],
     transitions: [
       { from: 'q0', to: 'q1', label: '0' },
-      { from: 'q0', to: 'q3', label: '1' },
+      { from: 'q0', to: 'q0', label: '1' },
+      { from: 'q1', to: 'q1', label: '0' },
       { from: 'q1', to: 'q2', label: '1' },
-      { from: 'q1', to: 'q0', label: '0' },
-      { from: 'q2', to: 'q1', label: '0' },
-      { from: 'q2', to: 'q3', label: '1' },
+      { from: 'q2', to: 'q3', label: '0' },
+      { from: 'q2', to: 'q2', label: '1' },
       { from: 'q3', to: 'q3', label: '0' },
       { from: 'q3', to: 'q3', label: '1' },
     ],
     activity: {
       type: 'select-elements',
       instruction: 'Selecione (em ordem) todos os estados que a string "010" percorre neste autômato.',
-      correctIds: ['q0', 'q1', 'q2', 'q1'],
+      correctIds: ['q0', 'q1', 'q2', 'q3'],
     },
   },
 
   // ── Fase 14: Dragdrop com loop ────────────────────────────────────
+  // CORRIGIDO: os blanks agora referenciam setas que NÃO estão em `transitions`.
+  // O diagrama exibe apenas as transições reveladas; as setas com "?" vêm de blanks.
   {
     id: 14, world: 2, name: 'Auto-Transições', difficulty: 2,
     concept: 'Self-loop: δ(q, a) = q',
@@ -379,15 +390,14 @@ const W2: Level[] = [
       { id: 'q0', label: 'q0', x: 200, y: 230, isInitial: true,  isAccept: false },
       { id: 'q1', label: 'q1', x: 500, y: 230, isInitial: false, isAccept: true  },
     ],
+    // Apenas as transições entre estados distintos são reveladas
     transitions: [
       { from: 'q0', to: 'q1', label: 'a' },
-      { from: 'q0', to: 'q0', label: 'b' },
-      { from: 'q1', to: 'q1', label: 'a' },
       { from: 'q1', to: 'q0', label: 'b' },
     ],
     activity: {
       type: 'dragdrop',
-      instruction: 'Complete as auto-transições deste autômato. Ele aceita strings que terminam com "a".',
+      instruction: 'Complete as auto-transições (loops) deste autômato. Ele aceita strings que terminam com "a".',
       blanks: [
         { from: 'q0', to: 'q0', correctLabel: 'b' },
         { from: 'q1', to: 'q1', correctLabel: 'a' },
@@ -416,12 +426,14 @@ const W2: Level[] = [
     activity: {
       type: 'quiz',
       question: 'Qual das strings abaixo é ACEITA por este autômato (que aceita strings terminando em "a")?',
-      options: ['"bba"', '"aab"', '"bb"', '"aba"... não, "abab"'],
+      options: ['"bba"', '"aab"', '"bb"', '"abab"'],
       answer: '"bba"',
     },
   },
 
   // ── Fase 16: Ordenar passos de δ* ────────────────────────────────
+  // CORRIGIDO: removida numeração explícita dos itens. Os itens agora
+  // descrevem o passo sem revelar a posição; correctOrder indica a sequência.
   {
     id: 16, world: 2, name: 'Passo a Passo de δ*', difficulty: 3,
     concept: 'Função de Transição Estendida δ*',
@@ -431,15 +443,16 @@ const W2: Level[] = [
     states: [], transitions: [],
     activity: {
       type: 'order',
-      instruction: 'Ordene os passos para calcular δ*(q0, "ab") — onde Σ = {a, b}, δ(q0,a)=q1, δ(q1,b)=q2:',
+      instruction: 'Ordene os passos para calcular δ*(q0, "ab") — onde δ(q0,a)=q1 e δ(q1,b)=q2:',
       items: [
-        '1. Partir de q0 com a string completa "ab"',
-        '2. Ler o primeiro símbolo "a": aplicar δ(q0, a) = q1',
-        '3. Estado atual passa a ser q1',
-        '4. Ler o próximo símbolo "b": aplicar δ(q1, b) = q2',
-        '5. Estado atual passa a ser q2',
-        '6. String esgotada. Verificar: q2 ∈ F? Se sim → aceita',
+        'Partir de q0 com a string completa "ab"',          // índice 0
+        'Aplicar δ(q0, a) = q1 (lê o primeiro símbolo)',   // índice 1
+        'Estado atual passa a ser q1',                      // índice 2
+        'Aplicar δ(q1, b) = q2 (lê o próximo símbolo)',    // índice 3
+        'Estado atual passa a ser q2',                      // índice 4
+        'String esgotada — verificar se q2 ∈ F',           // índice 5
       ],
+      // ordem correta: índices 0→1→2→3→4→5 (definida implicitamente por `items`)
     },
   },
 
@@ -475,23 +488,24 @@ const W2: Level[] = [
   },
 
   // ── Fase 18: Dragdrop 3 estados ───────────────────────────────────
+  // CORRIGIDO: os blanks agora só referenciam transições AUSENTES de
+  // `transitions`. A transição q1→q2 (label 'a') e q2→q0 (label 'a')
+  // foram removidas de `transitions` para que o aluno precise preenchê-las.
   {
     id: 18, world: 2, name: 'Três Estados, Duas Letras', difficulty: 4,
     concept: 'Completar autômato com 3 estados e Σ = {a, b}',
     story: 'Um autômato mais complexo — 3 estados e 2 símbolos. Complete TODAS as transições faltantes.',
     pedagogy: 'Dragdrop com maior número de blanks, exigindo raciocínio mais longo e tolerância a ambiguidade.',
-    hint: 'Este autômato aceita strings com número de "a"s divisível por 3. O estado representa o resto da divisão.',
+    hint: 'Este autômato aceita strings com número de "a"s divisível por 3. O estado representa o resto da divisão por 3.',
     states: [
       { id: 'q0', label: 'q0', x: 200, y: 230, isInitial: true,  isAccept: true  },
       { id: 'q1', label: 'q1', x: 430, y: 140, isInitial: false, isAccept: false },
       { id: 'q2', label: 'q2', x: 430, y: 320, isInitial: false, isAccept: false },
     ],
+    // Apenas as transições reveladas (loops de 'b' e q0→q1)
     transitions: [
       { from: 'q0', to: 'q1', label: 'a' },
-      { from: 'q1', to: 'q2', label: 'a' },
-      { from: 'q2', to: 'q0', label: 'a' },
       { from: 'q0', to: 'q0', label: 'b' },
-      { from: 'q1', to: 'q1', label: 'b' },
       { from: 'q2', to: 'q2', label: 'b' },
     ],
     activity: {
@@ -502,27 +516,29 @@ const W2: Level[] = [
         { from: 'q2', to: 'q0', correctLabel: 'a' },
         { from: 'q1', to: 'q1', correctLabel: 'b' },
       ],
-      labelPool: ['a', 'b', 'ε', 'a,b', '0', '1'],
+      labelPool: ['a', 'b', 'ε', 'a,b'],
     },
   },
 
   // ── Fase 19: Selecionar caminho "aba" ────────────────────────────
+  // CORRIGIDO: correctIds não pode ter repetições. Novo autômato com
+  // caminho "aba" = q0 → q1 → q2 → q3 (4 estados distintos).
   {
     id: 19, world: 2, name: 'Caminho de "aba"', difficulty: 4,
     concept: 'Rastreamento manual de δ*',
     story: 'Rastreie manualmente o caminho da string "aba" no autômato. Selecione todos os estados visitados, na ordem correta.',
     pedagogy: 'Variação do select-elements de nível mais alto: string mais longa, mais estados visitados, exige mais memória de trabalho.',
-    hint: '"aba": q0→(a)→q1→(b)→?→(a)→?. Siga cada seta com atenção ao rótulo.',
+    hint: '"aba": q0 →(a)→ q1 →(b)→ q2 →(a)→ q3. Siga cada seta com atenção ao rótulo.',
     states: [
-      { id: 'q0', label: 'q0', x: 180, y: 230, isInitial: true,  isAccept: false },
-      { id: 'q1', label: 'q1', x: 380, y: 140, isInitial: false, isAccept: false },
-      { id: 'q2', label: 'q2', x: 380, y: 320, isInitial: false, isAccept: false },
-      { id: 'q3', label: 'q3', x: 580, y: 230, isInitial: false, isAccept: true  },
+      { id: 'q0', label: 'q0', x: 160, y: 230, isInitial: true,  isAccept: false },
+      { id: 'q1', label: 'q1', x: 360, y: 230, isInitial: false, isAccept: false },
+      { id: 'q2', label: 'q2', x: 560, y: 230, isInitial: false, isAccept: false },
+      { id: 'q3', label: 'q3', x: 760, y: 230, isInitial: false, isAccept: true  },
     ],
     transitions: [
       { from: 'q0', to: 'q1', label: 'a' },
-      { from: 'q0', to: 'q2', label: 'b' },
-      { from: 'q1', to: 'q3', label: 'b' },
+      { from: 'q0', to: 'q0', label: 'b' },
+      { from: 'q1', to: 'q2', label: 'b' },
       { from: 'q1', to: 'q1', label: 'a' },
       { from: 'q2', to: 'q3', label: 'a' },
       { from: 'q2', to: 'q2', label: 'b' },
@@ -532,7 +548,7 @@ const W2: Level[] = [
     activity: {
       type: 'select-elements',
       instruction: 'Selecione, em ordem, todos os estados percorridos ao processar "aba" (incluindo início e fim).',
-      correctIds: ['q0', 'q1', 'q3', 'q3'],
+      correctIds: ['q0', 'q1', 'q2', 'q3'],
     },
   },
 
@@ -560,9 +576,9 @@ const W2: Level[] = [
       type: 'quiz',
       question: 'Este autômato aceita strings com número PAR de "a"s (incluindo zero). Qual das opções está CORRETA?',
       options: [
-        '"bbabb" é aceita — tem 0 "a"s de forma alternada, mas... espera: conta "a"s: 1. Rejeitada.',
         '"aabb" é aceita — tem 2 "a"s (par), termina em q0 ∈ F',
         '"aab" é aceita — tem 2 "a"s mas termina em estado de erro',
+        '"a" é aceita — tem 1 "a" (ímpar), termina em q1',
         '"b" é rejeitada — não tem "a"s, mas q0 não é aceitador',
       ],
       answer: '"aabb" é aceita — tem 2 "a"s (par), termina em q0 ∈ F',
