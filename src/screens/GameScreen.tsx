@@ -43,14 +43,14 @@ export function GameScreen({ level, world, onComplete, onBack }: Props) {
 
   // GIF pools for feedback
   const CORRECT_GIFS = [
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbWdjbmd0czlheWN1aHl1aWExNW9pa2g2NTZzaTY4djVzdHB2N2hwdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4cqiYI30juCOGY/giphy.gif',
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbzA2eWU3dHlsZGc0ZHM4bWFzaXozaXVsMGYzcGFoNTdtZHBhZnA5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/artj92V8o75VPL7AeQ/giphy.gif',
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNXZ2aGl5OGViZzdsMnZnYnY4ejR0NzE0NzM3YWJmeGI1MGRmcDlkbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l0MYt5jPR6QX5pnqM/giphy.gif',
+    'https://giphy.com/gifs/rider-tokusatsu-kamen-czzXEB8sbouOcQjl0N',
+    'https://giphy.com/gifs/dancing-steamhappy-steam-happy-avc09zuOkpWQ5QG4XL',
+    'https://giphy.com/gifs/JoyPixels-emoji-clapping-hands-8maQQ65FtVRWvGHem9',
   ];
   const WRONG_GIFS = [
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmdjYXVkeTdlcWY4anVubHFmOThpMmkwZWNhcGpmNGllMWVzaWt3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKP9ln2Dr6ze6f6/giphy.gif',
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm0yaGJrczk5NzBkMGVxNW50aW9hOHphcWFhbW5nbGljN2ZkcjF6dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26ufnwz3wDUli7GU0/giphy.gif',
-    'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjl4ZHBnbm1oNW5zZGh2cXNsMGhneTlhNDFuZGl1czFzaGRlMXhvZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1J9wJ6ZSONO96eca/giphy.gif',
+    'https://giphy.com/gifs/Enr4bc3JeOOzHLYY8R',
+    'https://giphy.com/gifs/cat-sad-crying-7AzEXdIb1wyCTWJntb',
+    'https://giphy.com/gifs/wrong-not-me-at-all-JT7Td5xRqkvHQvTdEu',
   ];
 
   // ── Handle activity result ───────────────────────────────────
