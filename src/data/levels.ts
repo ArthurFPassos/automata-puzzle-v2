@@ -342,7 +342,7 @@ const W2: Level[] = [
         { from: 'par', to: 'imp', correctLabel: 'a' },
         { from: 'imp', to: 'par', correctLabel: 'a' },
       ],
-      labelPool: ['a', 'b', 'a,b', '0'],
+      labelPool: ['a', 'b', 'a,b', 'a'],
     },
   },
 
