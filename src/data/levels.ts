@@ -523,7 +523,7 @@ const W2: Level[] = [
         { from: 'q2', to: 'q0', correctLabel: 'a' },
         { from: 'q1', to: 'q1', correctLabel: 'b' },
       ],
-      labelPool: ['a', 'b', 'ε', 'a,b'],
+      labelPool: ['a', 'b', 'ε', 'a'],
     },
   },
 
