@@ -395,6 +395,8 @@ const W2: Level[] = [
     // Apenas as transições entre estados distintos são reveladas
     transitions: [
       { from: 'q0', to: 'q1', label: 'a' },
+      { from: 'q0', to: 'q0', label: 'b' },
+      { from: 'q1', to: 'q1', label: 'a' },
       { from: 'q1', to: 'q0', label: 'b' },
     ],
     activity: {
