@@ -330,6 +330,8 @@ const W2: Level[] = [
     ],
     // Apenas as transições já reveladas ao aluno (os loops de 'b' são dados)
     transitions: [
+      { from: 'par', to: 'imp', label: 'a' },
+      { from: 'imp', to: 'par', label: 'a' },
       { from: 'par', to: 'par', label: 'b' },
       { from: 'imp', to: 'imp', label: 'b' },
     ],
