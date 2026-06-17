@@ -792,7 +792,7 @@ const W3: Level[] = [
     concept: 'AFD: número par de 0s (binário)',
     story: 'Um clássico! Strings binárias com número par de zeros. Você tem 2 estados e 4 transições. O estado representa a paridade dos zeros lidos.',
     pedagogy: 'Add-transitions com alfabeto binário e semântica de paridade: exige entender o que cada estado "representa".',
-    hint: 'q0 = par de zeros lidos (inclui zero zeros → q0 é aceitador). Ler 0 troca a paridade; ler 1 mantém.',
+    hint: 'q0 = par de zeros lidos (inclui zero zeros → q0 é aceitador). Ler 0 troca a paridade.',
     states: [
       { id: 'par',  label: 'Par',  x: 200, y: 230, isInitial: true,  isAccept: true  },
       { id: 'imp',  label: 'Ímpar', x: 500, y: 230, isInitial: false, isAccept: false },
@@ -802,7 +802,7 @@ const W3: Level[] = [
       type: 'build-automaton',
       stage: 'add-transitions',
       instruction: 'Adicione as transições para aceitar strings binárias com número PAR de 0s (incluindo nenhum 0). Máximo 4 transições.',
-      languageDescription: 'Strings sobre {0,1} com número par de 0s (0, 2, 4, ...)',
+      languageDescription: 'Strings sobre {0} com número par de 0s (0, 2, 4, ...)',
       starter: {
         states: [
           { id: 'par',  label: 'Par',  x: 200, y: 230, isInitial: true,  isAccept: true  },
@@ -810,10 +810,10 @@ const W3: Level[] = [
         ],
         transitions: [],
       },
-      labelPool: ['0', '1'],
+      labelPool: ['0'],
       maxTransitions: 4,
-      testAccept: ['', '00', '11', '1001', '0011'],
-      testReject: ['0', '1110', '010', '001'],
+      testAccept: ['', '00', '0000',],
+      testReject: ['0', '000', '00000'],
     },
   },
 
